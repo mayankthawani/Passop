@@ -17,16 +17,7 @@ const Manager = () => {
     }, []);
 
     const copyText = (text) => {
-        toast('Copied to clipboard!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-        });
+        toast('Copied to clipboard!', { theme: "light" });
         navigator.clipboard.writeText(text);
     };
 
@@ -44,18 +35,17 @@ const Manager = () => {
     };
 
     const deletepassword = (id) => {
-        if (confirm("Do you really want to delete?")) {
-            const updatedPasswords = passwordarray.filter((item) => item.id !== id);
-            setpasswordarray(updatedPasswords);
-            localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
-            toast('Password deleted!', { theme: "light" });
-        }
+        const updatedPasswords = passwordarray.filter((item) => item.id !== id);
+        setpasswordarray(updatedPasswords);
+        localStorage.setItem("passwords", JSON.stringify(updatedPasswords));
+        toast('Password deleted!', { theme: "light" });
     };
 
     const editpassword = (id) => {
         const passwordToEdit = passwordarray.find((item) => item.id === id);
         setform(passwordToEdit);
         deletepassword(id);
+        toast('Editing password!', { theme: "light" });
     };
 
     const handlechange = (e) => {
@@ -73,7 +63,6 @@ const Manager = () => {
                     </h1>
                     <p className="text-green-900 text-lg text-center mb-6">Your own Password Manager</p>
 
-                    {/* Form Section */}
                     <div className="flex flex-col gap-6 p-4 bg-white shadow-md rounded-lg">
                         <input
                             name="site"
@@ -82,7 +71,6 @@ const Manager = () => {
                             placeholder="Enter Website URL"
                             className="rounded-full border border-green-500 w-full p-4 focus:outline-none focus:ring focus:ring-green-300"
                             type="text"
-                            id="site"
                         />
                         <div className="flex flex-col md:flex-row gap-6">
                             <input
@@ -92,7 +80,6 @@ const Manager = () => {
                                 placeholder="Enter Username"
                                 className="rounded-full border border-green-500 w-full p-4 focus:outline-none focus:ring focus:ring-green-300"
                                 type="text"
-                                id="username"
                             />
                             <div className="relative w-full">
                                 <input
@@ -103,7 +90,6 @@ const Manager = () => {
                                     placeholder="Enter Password"
                                     className="rounded-full border border-green-500 w-full p-4 focus:outline-none focus:ring focus:ring-green-300"
                                     type="password"
-                                    id="password"
                                 />
                                 <span className="absolute right-4 top-4 cursor-pointer" onClick={handleclick}>
                                     <img ref={ref} className="w-6" src="/eye.png" alt="Toggle visibility" />
@@ -114,15 +100,11 @@ const Manager = () => {
                             onClick={savepassword}
                             className="bg-green-500 flex items-center justify-center text-white py-2 px-6 rounded-full hover:bg-green-600"
                         >
-                             <lord-icon
-                            src="https://cdn.lordicon.com/jgnvfzqg.json"
-                            trigger="hover" >
-                        </lord-icon>
+                            <lord-icon src="https://cdn.lordicon.com/jgnvfzqg.json" trigger="hover"></lord-icon>
                             Save
                         </button>
                     </div>
 
-                    {/* Passwords List */}
                     <div className="mt-8">
                         <h2 className="text-2xl font-bold mb-4">Your passwords</h2>
                         {passwordarray.length === 0 && <div className="text-center">No passwords to show!</div>}
@@ -140,43 +122,19 @@ const Manager = () => {
                                     <tbody className="divide-y divide-gray-200">
                                         {passwordarray.map((item) => (
                                             <tr key={item.id} className="bg-green-100">
-
-                                                
                                                 <td className="py-2 px-4">
-                                                    <a
-                                                        href={item.site}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="text-blue-500 underline"
-                                                    >
+                                                    <a href={item.site} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
                                                         {item.site}
                                                     </a>
-                                                    
-                                                  
-
                                                 </td>
                                                 <td className="py-2 px-4">{item.username}</td>
                                                 <td className="py-2 px-4">{item.password}</td>
                                                 <td className="py-2 px-4 flex gap-2">
-                                                    <button
-                                                        onClick={() => editpassword(item.id)}
-                                                        className="text-blue-500 hover:underline"
-                                                    >
-                                                       <lord-icon
-                                                src="https://cdn.lordicon.com/gwlusjdu.json"
-                                                trigger="hover"
-                                                style={{"width":"25px", "height":"25px"}}>
-                                            </lord-icon>
+                                                    <button onClick={() => editpassword(item.id)} className="text-blue-500 hover:underline">
+                                                        <lord-icon src="https://cdn.lordicon.com/gwlusjdu.json" trigger="hover" style={{ width: "25px", height: "25px" }}></lord-icon>
                                                     </button>
-                                                    <button
-                                                        onClick={() => deletepassword(item.id)}
-                                                        className="text-red-500 hover:underline"
-                                                    >
-                                                       <lord-icon
-                                                src="https://cdn.lordicon.com/skkahier.json"
-                                                trigger="hover"
-                                                style={{"width":"25px", "height":"25px"}}>
-                                            </lord-icon>
+                                                    <button onClick={() => deletepassword(item.id)} className="text-red-500 hover:underline">
+                                                        <lord-icon src="https://cdn.lordicon.com/skkahier.json" trigger="hover" style={{ width: "25px", height: "25px" }}></lord-icon>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -193,4 +151,3 @@ const Manager = () => {
 };
 
 export default Manager;
-
